@@ -17,11 +17,11 @@ If you are not familiar with the different technologies used in this project, pl
 
 ## TODO
 
--[] Make it deploy
--[] Scaffold basic ui with mock data
--[] Set up database
+-[x] Make it deploy (vercel)
+-[x] Scaffold basic ui with mock data
+-[] Set up database (vercel postgres)
 -[] Attach database to UI
--[] Add authentication
+-[] Add authentication (w/ clerk)
 -[] Add image upload
 -[] Error management (w/ Sentry)
 -[] Routing/image page (parallel route)
