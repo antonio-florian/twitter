@@ -29,7 +29,6 @@ If you are not familiar with the different technologies used in this project, pl
 -[x] Error management (w/ Sentry)
 -[x] Routing/image page (parallel route)
 -[x] Update upload button to be less cringe
--[] ShadUIfy (specificaly toasts)
--[] Delete button (w/ Server Actions)
 -[] Analytics (posthog)
+-[] Delete button (w/ Server Actions)
 -[] Ratelimiting (upstash)
