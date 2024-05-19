@@ -13,24 +13,37 @@ const coreConfig = {
     ignoreBuildErrors: true,
   },
   eslint: {
-    ignoreDuringBuilds: true, 
+    ignoreDuringBuilds: true,
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
+    ];
   },
 };
 
-import { withSentryConfig } from "@sentry/nextjs"
+import { withSentryConfig } from "@sentry/nextjs";
 
 const config = withSentryConfig(
-coreConfig,// Injected content via Sentry wizard below
+  coreConfig,
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
 
-    org: "antonio-florian",
-    project: "twitter",
-
-    // Only print logs for uploading source maps in CI
-    silent: !process.env.CI,
-
+    // Suppresses source map uploading logs during build
+    silent: true,
+    org: "t3gg",
+    project: "t3-gallery-video",
+  },
+  {
     // For all available options, see:
     // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
@@ -38,13 +51,12 @@ coreConfig,// Injected content via Sentry wizard below
     widenClientFileUpload: true,
 
     // Transpiles SDK to be compatible with IE11 (increases bundle size)
-    //transpileClientSDK: true,
+    transpileClientSDK: true,
 
-    // Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-    // This can increase your server load as well as your hosting bill.
+    // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers. (increases server load)
     // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
     // side errors will fail.
-     tunnelRoute: "/monitoring",
+    tunnelRoute: "/monitoring",
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,
@@ -52,16 +64,12 @@ coreConfig,// Injected content via Sentry wizard below
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
 
-    // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
+    // Enables automatic instrumentation of Vercel Cron Monitors.
     // See the following for more information:
     // https://docs.sentry.io/product/crons/
     // https://vercel.com/docs/cron-jobs
     automaticVercelMonitors: true,
-  }
+  },
 );
 
 export default config;
-
-
-
-
